@@ -110,3 +110,9 @@ textarea {
   border-bottom: 2px solid pink;
   padding-bottom: 1%;
 }
+
+.name-desk {
+  left: 65vh;
+  top: 45vh;
+  position: absolute;
+}

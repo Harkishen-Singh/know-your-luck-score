@@ -15,15 +15,10 @@ app.config(function($routeProvider) {
 			controller: 'front-desk-controller',
 			title: 'Know your luckyness',
 		})
-		// .when('/questions', {
-		// 	templateUrl: './components/article.html',
-		// 	controller: 'comments-controller',
-		// 	title: 'About',
-		// })
-		// .when('/contact', {
-		// 	templateUrl: './components/contact.html',
-		// 	title: 'Contact Info',
-		// });
+		.when('/contact', {
+			templateUrl: './components/contact.html',
+			title: 'Contact Info',
+		});
 });
 
 app.factory('$mainService', function() {
@@ -32,19 +27,24 @@ app.factory('$mainService', function() {
 		username = name;
 	};
 	let getUsername = function() {
-		return usernamel
+		return username;
+	};
+
+	return {
+		updateUsername,
+		getUsername
 	};
 });
 
 app.controller('front-desk-controller', function($scope, $mainService) {
 	$scope.name = '';
 	$scope.updateUsername = () => {
-		console.log('name is ');
 		$mainService.updateUsername(name);
 		global.throughProperRoute = true;
 	};
 });
 
-app.controller('general-controller', function($scope,$location,$rootScope,$http) {
-
+app.controller('general-controller', function($scope,$mainService) {
+	$scope.username = $mainService.getUsername();
+	console.warn('gen controller username is ', $scope.username)
 });
