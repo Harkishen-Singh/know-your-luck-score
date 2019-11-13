@@ -1,5 +1,72 @@
 // eslint-disable-next-line no-undef
-var app = angular.module('cmt-application', ['ngRoute']);
+var app = angular.module('luck-score-application', ['ngRoute']);
+
+class Engine {
+	// ID as string, 3 IDs as array of strings as answer elements
+	constructor(questionElementID, optionsElementID) {
+		this.questionElement = document.getElementById(questionElementID);
+		this.answers = [];
+		this.question = '';
+		this.questionLimit = 10;
+		this.result = {
+			correct: 0,
+			count: 0
+		}
+
+		for (const inst of optionsElementID) {
+			this.answers.push(document.getElementById(inst));
+		}
+	}
+
+	getRandomNumber() {
+		return Math.floor(Math.random() * 100);
+	}
+
+	setQuestion() {
+		this.question = this.getRandomNumber();
+		this.questionElement.innerHTML = this.question;
+		return parseInt(this.question);
+	}
+
+	setAnswerOptions(correctAnswer) {
+		let randomCorrectAnswerPosition = Math.floor(Math.random() * 3);
+		for (let inst in this.answers) {
+			this.answers[inst].innerHTML = inst != randomCorrectAnswerPosition ? this.getRandomNumber() : correctAnswer;
+		}
+	}
+
+	generate() {
+		this.setAnswerOptions(this.setQuestion());
+		return true; // confirm success
+	}
+
+	// accepts the answer as param and returns the result as a boolean
+	verify(answer) {
+		return answer === this.question;
+	}
+
+	submit(answer) {
+		this.result.count++;
+		if (this.verify(answer)) {
+			this.result.correct++;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	getCount() {
+		return this.result.count;
+	}
+
+	isCompleted() {
+		return this.result.count === this.questionLimit;
+	}
+
+	getLuckyness() {
+		return (this.result.correct / this.result.count);
+	}
+}
 
 var global = {
 	// URL for backend service listening at :9090
@@ -15,6 +82,11 @@ app.config(function($routeProvider) {
 			controller: 'front-desk-controller',
 			title: 'Know your luckyness',
 		})
+		.when('/luck', {
+			templateUrl: './components/lucky.html',
+			controller: 'general-controller',
+			title: 'Know your luckyness',
+		})
 		.when('/contact', {
 			templateUrl: './components/contact.html',
 			title: 'Contact Info',
@@ -22,7 +94,7 @@ app.config(function($routeProvider) {
 });
 
 app.factory('$mainService', function() {
-	let username;
+	var username;
 	let updateUsername = function(name) {
 		username = name;
 	};
@@ -36,15 +108,37 @@ app.factory('$mainService', function() {
 	};
 });
 
-app.controller('front-desk-controller', function($scope, $mainService) {
+app.controller('front-desk-controller', function($scope, $mainService, $location) {
 	$scope.name = '';
 	$scope.updateUsername = () => {
-		$mainService.updateUsername(name);
+		$mainService.updateUsername($scope.name);
 		global.throughProperRoute = true;
+		$location.path('/luck');
 	};
 });
 
 app.controller('general-controller', function($scope,$mainService) {
 	$scope.username = $mainService.getUsername();
-	console.warn('gen controller username is ', $scope.username)
+	$scope.properRoute = global.throughProperRoute;
+	$scope.showAnswers = false;
+	const engineInstance = new Engine(
+		'question',
+		[
+			'answer-1',
+			'answer-2',
+			'answer-3'
+		]
+	);
+	engineInstance.generate();
+	let updateEngineProperties = () => {
+		$scope.correctAnswer = engineInstance.result.correct;
+		$scope.totalQuestionsDone = engineInstance.result.count;
+		$scope.limit = engineInstance.questionLimit;
+	};
+	updateEngineProperties();
+
+	$scope.handleSubmit = () => {
+		$scope.showAnswers = true;
+	};
+
 });

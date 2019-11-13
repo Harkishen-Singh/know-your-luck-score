@@ -116,3 +116,60 @@ textarea {
   top: 45vh;
   position: absolute;
 }
+
+.outer-layer {
+  height: 40vh;
+  background-color: #F5F5F5;
+  margin: 3% 8% 3% 8%;
+  flex-direction: row;
+  display: flex;
+  padding: 1%;
+}
+
+.outer-in-question {
+  flex-grow: 3;
+}
+
+.outer-in-answer {
+  flex-grow: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-style {
+  flex-grow: 1;
+  font-size: 56px;
+  text-align: center;
+}
+
+.answer-style-ico {
+  flex-grow: 1;
+  height: 50px;
+  text-align: center;
+  margin-top: 5%;
+}
+
+#question {
+  font-size: 92px;
+  margin-top: 10%;
+  font-weight: 700;
+  text-align: center;
+}
+
+.about-options {
+  flex-grow: 1;
+}
+
+.options {
+  flex-grow: 8;
+  display: flex;
+  flex-direction: row;
+}
+
+.score-banner {
+  float: right;
+}
+
+.image-style-question {
+  height: 50px;
+}

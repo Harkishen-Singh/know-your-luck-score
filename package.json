@@ -1,0 +1,23 @@
+{
+  "name": "know-your-luck-score",
+  "version": "1.0.0",
+  "description": "get your lucky store",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server . -p 9090"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harkishen-Singh/know-your-luck-score.git"
+  },
+  "keywords": [
+    "lucky"
+  ],
+  "author": "harkishen-singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Harkishen-Singh/know-your-luck-score/issues"
+  },
+  "homepage": "https://github.com/Harkishen-Singh/know-your-luck-score#readme"
+}
