@@ -125,6 +125,7 @@ app.controller('general-controller', function($scope,$mainService) {
 	$scope.showAnswers = false;
 	$scope.showResultMessage = false;
 	$scope.showResultAsCorrect = false;
+	$scope.disableNextButton = false;
 	const engineInstance = new Engine(
 		'question',
 		[
@@ -151,6 +152,15 @@ app.controller('general-controller', function($scope,$mainService) {
 		}
 		$scope.showAnswers = true;
 		updateEngineProperties();
+	};
+
+	$scope.handleNext = () => {
+		if (!engineInstance.isCompleted()) {
+			engineInstance.generate();
+			updateEngineProperties();
+		} else {
+			$scope.disableNextButton = true;
+		}
 	};
 
 });

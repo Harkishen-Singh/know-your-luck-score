@@ -191,3 +191,8 @@ textarea {
   margin-bottom: -2%;
   margin-right: 9%;
 }
+
+.qa-foot {
+  margin: -2% 8% 0% 8%;
+  float: right;
+}

@@ -4,7 +4,7 @@
     </div>
     <hr>
     <div>
-        <div class="result-show" data-ng-show="showResultMessage">
+        <div class="result-show" data-ng-if="showResultMessage">
             <div data-ng-show="showResultAsCorrect" style="background-color: lightgreen;">
                 The guess is correct!
             </div>
@@ -42,19 +42,13 @@
                                 <img src="../images/question.png" class="image-style-question" alt="" srcset="">
                             </div>
                         </div>
-                        <!-- <div id="answer-2" class="answer-style"></div>
-                        <div id="answer-3" class="answer-style"></div> -->
                     </div>
-                    <!-- <div class="options" data-ng-show="!showAnswers" data-ng-click="handleSubmit()">
-                        <div class="answer-style-ico">
-                            <img src="../images/question.png" class="image-style-question" alt="" srcset="">
-                        </div>
-                        <div class="answer-style-ico">
-                            <img src="../images/question.png" class="image-style-question" alt="" srcset="">
-                        </div>
-                    </div> -->
                 </div>
             </div>
+        </div>
+        <div class="qa-foot">
+            <button class="btn btn-success">Finish</button>
+            <button class="btn btn-primary" ng-disabled="!showAnswers || disableNextButton" data-ng-click="handleNext()">Next</button>
         </div>
     </div>
 </div>
