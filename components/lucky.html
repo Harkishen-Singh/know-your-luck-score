@@ -47,8 +47,14 @@
             </div>
         </div>
         <div class="qa-foot">
-            <button class="btn btn-success">Finish</button>
-            <button class="btn btn-primary" ng-disabled="!showAnswers || disableNextButton" data-ng-click="handleNext()">Next</button>
+            <button class="btn btn-success" data-ng-click="handleFinish()">Finish</button>
+            <button class="btn btn-primary" data-ng-disabled="!showAnswers || disableNextButton" data-ng-click="handleNext()">Next</button>
         </div>
+    </div>
+    <div class="finish conclusion" data-ng-if="showResult">
+        <span>
+            {{ username }}, your luck score is at {{ format((correctAnswer / totalQuestionsDone) * 100) }} %.
+            Hence, you have <b>{{ conclusion }}</b>.
+        </span>
     </div>
 </div>

@@ -11,7 +11,7 @@ class Engine {
 		this.result = {
 			correct: 0,
 			count: 0
-		}
+		};
 
 		for (const inst of optionsElementID) {
 			this.answers.push(document.getElementById(inst));
@@ -49,10 +49,8 @@ class Engine {
 		this.result.count++;
 		if (this.verify(parseInt(answer))) {
 			this.result.correct++;
-			console.log("the answer is correct")
 			return true;
 		} else {
-			console.log("the answer is wrong")
 			return false;
 		}
 	}
@@ -126,6 +124,8 @@ app.controller('general-controller', function($scope,$mainService) {
 	$scope.showResultMessage = false;
 	$scope.showResultAsCorrect = false;
 	$scope.disableNextButton = false;
+	$scope.showResult = false;
+
 	const engineInstance = new Engine(
 		'question',
 		[
@@ -142,10 +142,13 @@ app.controller('general-controller', function($scope,$mainService) {
 	};
 	updateEngineProperties();
 
+	let tmp;
 	$scope.handleSubmit = (id) => {
 		document.getElementById('instance-' + id.toString()).style.backgroundColor = '#CFD8DC';
 		let value = document.getElementById('answer-' + id);
-		let result = engineInstance.submit(value.innerText)
+		let result = engineInstance.submit(value.innerText);
+		tmp = 'instance-' + id.toString();
+
 		$scope.showResultMessage = true;
 		if (result) {
 			$scope.showResultAsCorrect = true;
@@ -155,12 +158,34 @@ app.controller('general-controller', function($scope,$mainService) {
 	};
 
 	$scope.handleNext = () => {
+		$scope.showResult = false;
+		$scope.showAnswers = false;
+		$scope.showResultMessage = false;
+		$scope.showResultAsCorrect = false;
+
+		document.getElementById(tmp).style.backgroundColor = '#F5F5F5';
 		if (!engineInstance.isCompleted()) {
 			engineInstance.generate();
 			updateEngineProperties();
 		} else {
 			$scope.disableNextButton = true;
 		}
+	};
+
+	$scope.handleFinish = () => {
+		let score = engineInstance.result.correct / engineInstance.result.count;
+		if (score >= 0.7) {
+			$scope.conclusion = 'extremely good luck';
+		} else if (score > 0.3 && score < 0.7) {
+			$scope.conclusion = 'a good luck';
+		} else if (score <= 0.3) {
+			$scope.conclusion = 'bad luck';
+		}
+		$scope.showResult = true;
+	};
+
+	$scope.format = num => {
+		return Math.round(num * 100) / 100;
 	};
 
 });

@@ -127,7 +127,7 @@ textarea {
 }
 
 .outer-in-question {
-  flex-grow: 3;
+  flex-grow: 5;
 }
 
 .outer-in-answer {
@@ -195,4 +195,8 @@ textarea {
 .qa-foot {
   margin: -2% 8% 0% 8%;
   float: right;
+}
+
+.conclusion {
+  margin: 1% 8% 0% 8%;
 }
