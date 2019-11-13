@@ -47,10 +47,12 @@ class Engine {
 
 	submit(answer) {
 		this.result.count++;
-		if (this.verify(answer)) {
+		if (this.verify(parseInt(answer))) {
 			this.result.correct++;
+			console.log("the answer is correct")
 			return true;
 		} else {
+			console.log("the answer is wrong")
 			return false;
 		}
 	}
@@ -121,6 +123,8 @@ app.controller('general-controller', function($scope,$mainService) {
 	$scope.username = $mainService.getUsername();
 	$scope.properRoute = global.throughProperRoute;
 	$scope.showAnswers = false;
+	$scope.showResultMessage = false;
+	$scope.showResultAsCorrect = false;
 	const engineInstance = new Engine(
 		'question',
 		[
@@ -137,8 +141,16 @@ app.controller('general-controller', function($scope,$mainService) {
 	};
 	updateEngineProperties();
 
-	$scope.handleSubmit = () => {
+	$scope.handleSubmit = (id) => {
+		document.getElementById('instance-' + id.toString()).style.backgroundColor = '#CFD8DC';
+		let value = document.getElementById('answer-' + id);
+		let result = engineInstance.submit(value.innerText)
+		$scope.showResultMessage = true;
+		if (result) {
+			$scope.showResultAsCorrect = true;
+		}
 		$scope.showAnswers = true;
+		updateEngineProperties();
 	};
 
 });

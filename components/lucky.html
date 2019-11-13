@@ -3,32 +3,56 @@
         <span> Welcome {{ username }}. </span>
     </div>
     <hr>
-    <div class="outer-layer">
-        <div class="outer-in-question">
-            <div id="question"></div>
-        </div>
-        <div class="outer-in-answer">
-            <div class="about-options">
-                Guess the option below which matches the given number in the question:
-                <span class="score-banner">Score: {{ correctAnswer }} / {{ limit }} </span>
-                <hr>
+    <div>
+        <div class="result-show" data-ng-show="showResultMessage">
+            <div data-ng-show="showResultAsCorrect" style="background-color: lightgreen;">
+                The guess is correct!
             </div>
-            <div class="options">
-                <div class="options" data-ng-show="showAnswers">
-                    <div id="answer-1" class="answer-style"></div>
-                    <div id="answer-2" class="answer-style"></div>
-                    <div id="answer-3" class="answer-style"></div>
+            <div data-ng-show="!showResultAsCorrect" style="background-color: lightsalmon;">
+                Sorry. The guess is wrong.
+            </div>
+        </div>
+        <div class="outer-layer">
+            <div class="outer-in-question">
+                <div id="question"></div>
+            </div>
+            <div class="outer-in-answer">
+                <div class="about-options">
+                    Guess the option below which matches the given number in the question:
+                    <span class="score-banner">Score: {{ correctAnswer }} / {{ limit }} &nbsp;&nbsp;&nbsp; Total: {{ totalQuestionsDone }} </span>
+                    <hr>
                 </div>
-                <div class="options" data-ng-show="!showAnswers" data-ng-click="handleSubmit()">
-                    <div class="answer-style-ico">
-                        <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                <div class="options">
+                    <div class="options">
+                        <div class="answer-style-bare" id="instance-1">
+                            <div id="answer-1" class="answer-style" data-ng-show="showAnswers"></div>
+                            <div class="answer-style-ico" data-ng-show="!showAnswers" data-ng-click="handleSubmit(1)">
+                                <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                            </div>
+                        </div>
+                        <div class="answer-style-bare" id="instance-2">
+                            <div id="answer-2" class="answer-style" data-ng-show="showAnswers"></div>
+                            <div class="answer-style-ico" data-ng-show="!showAnswers" data-ng-click="handleSubmit(2)">
+                                <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                            </div>
+                        </div>
+                        <div class="answer-style-bare" id="instance-3">
+                            <div id="answer-3" class="answer-style" data-ng-show="showAnswers"></div>
+                            <div class="answer-style-ico" data-ng-show="!showAnswers" data-ng-click="handleSubmit(3)">
+                                <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                            </div>
+                        </div>
+                        <!-- <div id="answer-2" class="answer-style"></div>
+                        <div id="answer-3" class="answer-style"></div> -->
                     </div>
-                    <div class="answer-style-ico">
-                        <img src="../images/question.png" class="image-style-question" alt="" srcset="">
-                    </div>
-                    <div class="answer-style-ico">
-                        <img src="../images/question.png" class="image-style-question" alt="" srcset="">
-                    </div>
+                    <!-- <div class="options" data-ng-show="!showAnswers" data-ng-click="handleSubmit()">
+                        <div class="answer-style-ico">
+                            <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                        </div>
+                        <div class="answer-style-ico">
+                            <img src="../images/question.png" class="image-style-question" alt="" srcset="">
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>

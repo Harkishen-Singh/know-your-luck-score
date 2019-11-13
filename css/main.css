@@ -131,22 +131,29 @@ textarea {
 }
 
 .outer-in-answer {
-  flex-grow: 5;
+  flex-grow: 7;
   display: flex;
   flex-direction: column;
+}
+
+.answer-style-bare {
+  flex-grow: 1;
+  font-size: 56px;
+  text-align: center;
 }
 
 .answer-style {
   flex-grow: 1;
   font-size: 56px;
   text-align: center;
+  margin-top: 2%;
 }
 
 .answer-style-ico {
   flex-grow: 1;
   height: 50px;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 2%;
 }
 
 #question {
@@ -161,7 +168,12 @@ textarea {
 }
 
 .options {
-  flex-grow: 8;
+  flex-grow: 10;
+  display: flex;
+  flex-direction: row;
+}
+
+.options-bare {
   display: flex;
   flex-direction: row;
 }
@@ -172,4 +184,10 @@ textarea {
 
 .image-style-question {
   height: 50px;
+}
+
+.result-show {
+  margin-left: 8%;
+  margin-bottom: -2%;
+  margin-right: 9%;
 }
