@@ -172,7 +172,7 @@ app.controller('general-controller', function($scope,$mainService) {
 	};
 
 	let tmp;
-	$scope.handleSubmit = (id) => {
+	$scope.handleSubmit = id => {
 		document.getElementById('instance-' + id.toString()).style.backgroundColor = '#CFD8DC';
 		let value = document.getElementById('answer-' + id);
 		let result = engineInstance.submit(value.innerText);
@@ -209,10 +209,10 @@ app.controller('general-controller', function($scope,$mainService) {
 			statement += 'extremely good';
 		} else if (score > 0.3 && score < 0.7) {
 			$scope.conclusion = 'a good luck';
-			statement += 'good'
+			statement += 'good';
 		} else if (score <= 0.3) {
 			$scope.conclusion = 'bad luck';
-			statement += 'bad'
+			statement += 'bad';
 		}
 
 		$scope.showResult = true;
