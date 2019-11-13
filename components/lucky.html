@@ -1,17 +1,34 @@
 <div>
-    <div>
-        <span> Welcome {{ username }}. </span>
+    <!-- <div>
+        <span class="welcome"> Welcome {{ username }}. Know your luck by playing a simple game. </span>
+    </div> -->
+    <!-- <hr> -->
+    <div data-ng-show="!startGame" class="instruction-style">
+        Instructions:
+        <ol>
+            <li>
+                This game will help you to know how lucky you are.
+            </li>
+            <li>
+                A number would be generated to the left of the screen.
+            </li>
+            <li>
+                You need to guess any of the three options which you think would match the generated number.
+            </li>
+            <li>
+                After selecting the option, click on the <b>Next</b> button.
+            </li>
+            <li>
+                This would be repeated 10 times.
+            </li>
+            <li>
+                After 10 questions, you can click the <b>Finish</b> button to know your luck score.
+            </li>
+        </ol>
+        <br>
+        <button class="btn btn-primary" data-ng-click="beginGame()">Start</button>
     </div>
-    <hr>
-    <div>
-        <div class="result-show" data-ng-if="showResultMessage">
-            <div data-ng-show="showResultAsCorrect" style="background-color: lightgreen;">
-                The guess is correct!
-            </div>
-            <div data-ng-show="!showResultAsCorrect" style="background-color: lightsalmon;">
-                Sorry. The guess is wrong.
-            </div>
-        </div>
+    <div data-ng-show="startGame">
         <div class="outer-layer">
             <div class="outer-in-question">
                 <div id="question"></div>
@@ -19,7 +36,7 @@
             <div class="outer-in-answer">
                 <div class="about-options">
                     Guess the option below which matches the given number in the question:
-                    <span class="score-banner">Score: {{ correctAnswer }} / {{ limit }} &nbsp;&nbsp;&nbsp; Total: {{ totalQuestionsDone }} </span>
+                    <span class="score-banner"> Score: {{ correctAnswer }} / {{ limit }} &nbsp;&nbsp;&nbsp; Total: {{ totalQuestionsDone }}</span>
                     <hr>
                 </div>
                 <div class="options">
@@ -47,13 +64,25 @@
             </div>
         </div>
         <div class="qa-foot">
-            <button class="btn btn-success" data-ng-click="handleFinish()">Finish</button>
+            <div class="result-show" data-ng-if="showResultMessage">
+                <div data-ng-show="showResultAsCorrect" style="background-color: lightgreen;">
+                    Correct
+                </div>
+                <div data-ng-show="!showResultAsCorrect" style="background-color: lightsalmon;">
+                    Wrong
+                </div>
+            </div>
+            &nbsp;
+            <button class="btn btn-success" data-ng-click="handleFinish()"  data-ng-disabled="disableFinish">
+                Finish (left {{ leftCount }})
+            </button>
+            &nbsp; &nbsp;
             <button class="btn btn-primary" data-ng-disabled="!showAnswers || disableNextButton" data-ng-click="handleNext()">Next</button>
         </div>
     </div>
     <div class="finish conclusion" data-ng-if="showResult">
         <span>
-            {{ username }}, your luck score is at {{ format((correctAnswer / totalQuestionsDone) * 100) }} %.
+            {{ username }}, your luck score is at {{ roundToTwoDecimal((correctAnswer / totalQuestionsDone) * 100) }} %.
             Hence, you have <b>{{ conclusion }}</b>.
         </span>
     </div>

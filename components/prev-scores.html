@@ -1,0 +1,14 @@
+<div class="previous-layer">
+    Previous luck scores:
+    <br>
+    <div data-ng-if="previousScores.length !== 0">
+        <ol>
+            <li data-ng-repeat="inst in previousScores track by $index">
+                {{ inst }}
+            </li>
+        </ol>
+    </div>
+    <div data-ng-if="previousScores.length === 0">
+        No previous data found. Please use the <b>Know your luck score</b> for viewing the history.
+    </div>
+</div>

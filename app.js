@@ -69,11 +69,17 @@ class Engine {
 }
 
 var global = {
-	// URL for backend service listening at :9090
-	url: 'http://127.0.0.1:9090',
 	username: '',
 	throughProperRoute: false,
+	prevRecords: []
 };
+
+function updateHistory() {
+	if (localStorage.getItem('luck-store') !== null) {
+		global.prevRecords = localStorage.getItem('luck-store').split(';');
+	}
+} updateHistory();
+
 
 app.config(function($routeProvider) {
 	$routeProvider
@@ -85,6 +91,11 @@ app.config(function($routeProvider) {
 		.when('/luck', {
 			templateUrl: './components/lucky.html',
 			controller: 'general-controller',
+			title: 'Know your luckyness',
+		})
+		.when('/previous', {
+			templateUrl: './components/prev-scores.html',
+			controller: 'history-controller',
 			title: 'Know your luckyness',
 		})
 		.when('/contact', {
@@ -108,6 +119,11 @@ app.factory('$mainService', function() {
 	};
 });
 
+app.controller('history-controller', function($scope) {
+	updateHistory();
+	$scope.previousScores = global.prevRecords;
+});
+
 app.controller('front-desk-controller', function($scope, $mainService, $location) {
 	$scope.name = '';
 	$scope.updateUsername = () => {
@@ -125,6 +141,9 @@ app.controller('general-controller', function($scope,$mainService) {
 	$scope.showResultAsCorrect = false;
 	$scope.disableNextButton = false;
 	$scope.showResult = false;
+	$scope.startGame = false;
+	$scope.disableFinish = true;
+	$scope.leftCount = 10;
 
 	const engineInstance = new Engine(
 		'question',
@@ -139,8 +158,18 @@ app.controller('general-controller', function($scope,$mainService) {
 		$scope.correctAnswer = engineInstance.result.correct;
 		$scope.totalQuestionsDone = engineInstance.result.count;
 		$scope.limit = engineInstance.questionLimit;
+		$scope.leftCount = engineInstance.questionLimit - engineInstance.getCount();
+
+		if ($scope.limit === $scope.totalQuestionsDone) {
+			$scope.disableFinish = false;
+			$scope.disableNextButton = true;
+		}
 	};
 	updateEngineProperties();
+
+	$scope.beginGame = () => {
+		$scope.startGame = true;
+	};
 
 	let tmp;
 	$scope.handleSubmit = (id) => {
@@ -174,17 +203,27 @@ app.controller('general-controller', function($scope,$mainService) {
 
 	$scope.handleFinish = () => {
 		let score = engineInstance.result.correct / engineInstance.result.count;
+		let statement = 'user: ' + $mainService.getUsername() + ' score: ' + score + ' luck: ';
 		if (score >= 0.7) {
 			$scope.conclusion = 'extremely good luck';
+			statement += 'extremely good';
 		} else if (score > 0.3 && score < 0.7) {
 			$scope.conclusion = 'a good luck';
+			statement += 'good'
 		} else if (score <= 0.3) {
 			$scope.conclusion = 'bad luck';
+			statement += 'bad'
 		}
+
 		$scope.showResult = true;
+		statement += ' time: ' + new Date().getTime();
+		global.prevRecords.push(statement);
+
+		localStorage.setItem('luck-store', global.prevRecords.join(';'));
+		updateHistory();
 	};
 
-	$scope.format = num => {
+	$scope.roundToTwoDecimal = num => {
 		return Math.round(num * 100) / 100;
 	};
 
