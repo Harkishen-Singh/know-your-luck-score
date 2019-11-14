@@ -1,5 +1,7 @@
 ### Know your luck score
 
+_**Explanatory Video [link](https://drive.google.com/file/d/138D9SExc2nqaxHlLRpZjfL0jpJTs2jt1/view)**_
+
 This simple game will help you calculate your luck based on few guesses.
 
 Steps to run:
