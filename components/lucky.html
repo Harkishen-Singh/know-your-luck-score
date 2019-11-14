@@ -1,8 +1,4 @@
 <div>
-    <!-- <div>
-        <span class="welcome"> Welcome {{ username }}. Know your luck by playing a simple game. </span>
-    </div> -->
-    <!-- <hr> -->
     <div data-ng-show="!startGame" class="instruction-style">
         Instructions:
         <ol>
@@ -73,7 +69,7 @@
                 </div>
             </div>
             &nbsp;
-            <button class="btn btn-success" data-ng-click="handleFinish()"  data-ng-disabled="disableFinish">
+            <button class="btn btn-success" data-ng-click="handleFinish()" data-ng-disabled="disableFinish">
                 Finish (left {{ leftCount }})
             </button>
             &nbsp; &nbsp;
@@ -82,8 +78,8 @@
     </div>
     <div class="finish conclusion" data-ng-if="showResult">
         <span>
-            {{ username }}, your luck score is at {{ roundToTwoDecimal((correctAnswer / totalQuestionsDone) * 100) }} %.
-            Hence, you have <b>{{ conclusion }}</b>.
+        {{ username }}, your luck score is at {{ roundToTwoDecimal((correctAnswer / totalQuestionsDone) * 100) }} %.
+        Hence, you have <b>{{ conclusion }}</b>.
         </span>
     </div>
 </div>

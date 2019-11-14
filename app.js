@@ -133,7 +133,11 @@ app.controller('front-desk-controller', function($scope, $mainService, $location
 	};
 });
 
-app.controller('general-controller', function($scope,$mainService) {
+app.controller('general-controller', function($scope, $mainService, $location) {
+	if (!global.throughProperRoute) {
+		$location.path('/');
+	}
+
 	$scope.username = $mainService.getUsername();
 	$scope.properRoute = global.throughProperRoute;
 	$scope.showAnswers = false;
